@@ -1,2 +1,0 @@
-# revolutas
-Cathay Pacific Hackathon
