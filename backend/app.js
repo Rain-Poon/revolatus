@@ -49,4 +49,5 @@ app.use('/recycling', recyclingRoute)
 const redemptionRoute = require('./routes/redemption');
 app.use('/redemption', redemptionRoute)
 
-
+const userRoute = require('./routes/user');
+app.use('/', userRoute)

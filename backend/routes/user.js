@@ -3,6 +3,16 @@
 const express = require("express");
 const { checkPassword } = require("../auth");
 const router = express.Router();
+const { getDb, connectToDb } = require('../db');
+const User = require("../models/User")
+
+let db
+
+connectToDb((err) => {
+    if(!err){
+      db = getDb()
+    }
+})
 
 router.post('/login', async (req, res) => {
     const collection = db.collection('users');
@@ -18,6 +28,8 @@ router.post('/user', (req, res) => {
 
     const user = new User({
         name: req.body.name,
+        membershipID: req.body.membershipID,
+        password: req.body.password,
         miles: req.body.miles,
         statusPoint: req.body.statusPoint,
         history: req.body.history,
@@ -158,3 +170,4 @@ router.get('/user/:userID/pntleft', async (req, res) => {
     };
 })
 
+module.exports = router;
