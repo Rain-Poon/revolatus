@@ -6,10 +6,6 @@ const bodyParser = require('body-parser');
 const User = require('./models/User')
 const Tier = require('./models/Tier')
 
-// Import Routes
-const recyclingRoute = require('./routes/recycling');
-app.use('/recycling', recyclingRoute)
-
 const { getDb, connectToDb } = require('./db');
 
 app.use(bodyParser.json())
@@ -24,6 +20,11 @@ connectToDb((err) => {
       db = getDb()
     }
 })
+
+// Import Routes
+const recyclingRoute = require('./routes/recycling');
+app.use('/recycling', recyclingRoute)
+
 
 // create user
 
