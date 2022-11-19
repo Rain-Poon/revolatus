@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { getDb, connectToDb } = require('../db');
 
-app.use(bodyParser.json())
+app.use(express.json())
 
 let db
 

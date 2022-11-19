@@ -6,6 +6,14 @@ const UserSchema = mongoose.Schema(
             type: String,
             required: true
         },
+        membershipID: {
+            type: String,
+            required: true
+        },
+        password: {
+            type: String,
+            required: true
+        },
         miles: {
             type: Number,
             required: true

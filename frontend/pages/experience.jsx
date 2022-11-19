@@ -1,12 +1,23 @@
 import { Card, Divider, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
 import ExperienceCard from "../components/experience/experiencecard";
 import NavBars from "../components/navbars";
+import { REDEMPTION_GET_REDEMPTION_LIST } from "../consts/routes.const";
 import { CATHAY_GREEN, GOLD } from "../styles/colors";
 
-const experienceList = []
-
 export default function CathayCard() {
+    const [experienceList, setExperienceList] = useState([]);
+    const fetchData = async () => {
+        const data = await axios.get(REDEMPTION_GET_REDEMPTION_LIST);
+        if (data.data !== undefined) setExperienceList(data.data);
+
+    }
+    useEffect(() => {
+        fetchData();
+    }, [])
     return (
         <NavBars title="Redeem with your Status Point">
             {/* <Box sx={{display: "flex", justifyContent: "center"}}>
@@ -24,15 +35,18 @@ export default function CathayCard() {
                     <Typography sx={{ p: 2 }}>KONG CHEUCK SZE</Typography>
                 </Card>
             </Box> */}
-            <Box sx={{m:2, p:3}}>
+            <Box sx={{ m: 2, p: 3 }}>
                 <Box sx={{ borderTop: `2px solid ${GOLD}`, width: "90%", m: 2 }}>&nbsp;</Box>
                 <Typography>Tracy said she will be giving me this description so I just say Lorem Ipsum first.</Typography>
                 <Box sx={{ borderBottom: `2px solid ${GOLD}`, width: "90%", m: 2 }}>&nbsp;</Box>
             </Box>
-            <ExperienceCard
-                eventName="HK Wine Festival"
-                pointAmount={20}
-            />
+            {!!(experienceList.length > 0) && experienceList.map((value, index) =>
+                <ExperienceCard
+                    eventName={value.title}
+                    pointAmount={value.miles}
+                />
+            )
+            }
         </NavBars>
     );
 }

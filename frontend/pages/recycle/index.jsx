@@ -10,58 +10,26 @@ import { RECYCLE_GET_RECYCLE_LIST } from "../../consts/routes.const";
 const categoryList = [
     "Cosmetics",
     "Clothing",
-    "Recycling Store"
-]
-
-const _itemList = [
-    {
-        category: "Cosmetics",
-        tradeQuantity: 1,
-        milesQuantity: 10,
-        brandName: "L' Oreal"
-    }, {
-        category: "Clothing",
-        tradeQuantity: 1,
-        milesQuantity: 10,
-        brandName: "abc"
-    }, {
-        category: "Clothing",
-        tradeQuantity: 1,
-        milesQuantity: 120,
-        brandName: "abc"
-    }
+    "Recycling-Store"
 ]
 
 export default function RecyclePage() {
     const [option, setOption] = useState("Cosmetics");
-    const [itemList, setItemList] = useState(_itemList);
+    const [itemList, setItemList] = useState([]);
 
+    const TracyKong = async () => {
+        const data = await axios.get(RECYCLE_GET_RECYCLE_LIST + option)
+        if (data.data != "") {
+            setItemList(data.data);
+        } else {
+            setItemList([]);
+        }
+    }
 
-    // useEffect(() => {
-    //     async function FetchRecycleData(option) {
-    //         try {
-    //             // const data = 
-    //             //     await axios.get(
-    //             //         "https://f6931828-82d6-4d69-8928-1e48b645c018.mock.pstmn.io" +
-    //             //         "/recycle/getrecyclelist"
-    //             //     )
+    useEffect(() => {
+        TracyKong();
+    }, [option]);
 
-    //             const data = await fetch("https://f6931828-82d6-4d69-8928-1e48b645c018.mock.pstmn.io/recycle/getrecyclelist")
-    //             console.log(data)
-    //             return data;
-    //         } catch (error) {
-    //             alert(error)
-    //             return "";
-    //         }
-    //     }
-    //     const data = FetchRecycleData();
-    //     if (data != "") {
-    //         setItemList(data);
-    //     } else {
-    //         setItemList([]);
-    //     }
-
-    // }, [option])
     return (
         <NavBars title="Recycling">
             <Box sx={{ m: 3, p: 2, display: "flex", flexDirection: "row", justifyContent: "center" }}>
@@ -89,6 +57,7 @@ export default function RecyclePage() {
 
             {!!(itemList.length > 0) && itemList.map((value, index) =>
                 <RecycleCard
+                    key={index}
                     tradeQuantity={value.tradeQuantity}
                     milesQuantity={value.milesQuantity}
                     category={value.category}
