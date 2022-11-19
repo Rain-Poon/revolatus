@@ -14,8 +14,8 @@ let db
 
 connectToDb((err) => {
     if(!err){
-      app.listen('3000', () => {
-        console.log('app listening on port 3000')
+      app.listen('8000', () => {
+        console.log('app listening on port 8000')
       })
       db = getDb()
     }
@@ -24,6 +24,9 @@ connectToDb((err) => {
 // Import Routes
 const recyclingRoute = require('./routes/recycling');
 app.use('/recycling', recyclingRoute)
+
+const redemptionRoute = require('./routes/redemption');
+app.use('/redemption', redemptionRoute)
 
 
 // create user
