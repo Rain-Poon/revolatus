@@ -1,6 +1,7 @@
 import { Card, Divider, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useEffect } from "react";
 import ExperienceCard from "../components/experience/experiencecard";
@@ -10,11 +11,30 @@ import { CATHAY_GREEN, GOLD } from "../styles/colors";
 
 export default function CathayCard() {
     const [experienceList, setExperienceList] = useState([]);
+    const router = useRouter();
     const fetchData = async () => {
-        const data = await axios.get(REDEMPTION_GET_REDEMPTION_LIST);
-        if (data.data !== undefined) setExperienceList(data.data);
-
+        const token = localStorage.getItem('token') || "";
+        try {
+            const data = await axios({
+                method: "GET",
+                url: REDEMPTION_GET_REDEMPTION_LIST,
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            if (data.data != "") {
+                setExperienceList(data.data);
+            } else {
+                setExperienceList([]);
+            }
+        } catch (error) {
+            if (error.response.status === 403) router.push("/login")
+            console.log(error)
+        }
     }
+    // const fetchData = async () => {
+    //     const data = await axios.get(REDEMPTION_GET_REDEMPTION_LIST);
+    //     if (data.data !== undefined) setExperienceList(data.data);
+
+    // }
     useEffect(() => {
         fetchData();
     }, [])

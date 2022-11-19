@@ -1,59 +1,33 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
-
-function generateEncryptedPassword(){
-    bcrypt.genSalt(saltRounds, function(err, salt) {
-        bcrypt.hash(myPlaintextPassword, salt, function(err, hash) {
-            if (!err) return hash
-            else {
-                console.log(err);
-                return ""
-            }
-        });
-    });
-}
-
-function checkPassword(pw1, pw2){
-    bcrypt.compare(myPlaintextPassword, hash, function(err, result) {
-        if (!err){
-            if (result == true) return true;
-            else return false;
-        } else {
-            console.log(err)
-            return false;
-        }
-    });
-}
-
 
 function generateAccessToken(username) {
-    return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '1m' });
+    return jwt.sign(username, process.env.JWT_TOKEN, { });
 }
 
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
-    if (!authHeader){
-        const token = authHeader.split(' ')[1]
+    let token = "";
+    if (authHeader != undefined){
+        token = authHeader.split(' ')[1]
     } else {
-        return res.status(401)
+        return res.status(401).json({status: "failed"})
     }
+    if (token != undefined){
+        jwt.verify(token, process.env.JWT_TOKEN, (err, user) => {
+            console.log(err)
 
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-        console.log(err)
+            if (err) return res.status(403).json({status: "failed"})
+            // req.user = user
 
-        if (err) return res.sendStatus(403)
-
-        req.user = user
-
-        next()
-    })
+            next()
+        })
+    } else {
+        return res.status(403).json({status: "failed"})
+    }
 }
 
 module.exports = {
-    generateEncryptedPassword,
-    checkPassword,
     generateAccessToken,
     authenticateToken
 }

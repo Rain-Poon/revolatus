@@ -5,10 +5,13 @@ const RecyclingStation = require('../models/Recycling');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { getDb, connectToDb } = require('../db');
+var ObjectId = require('mongodb').ObjectId;
+
+const { authenticateToken } = require("../auth")
 
 app.use(bodyParser.json())
 
-let db
+let db = getDb()
 
 connectToDb((err) => {
     if(!err){
@@ -48,7 +51,8 @@ router.get('/', async (req, res) => {
 
 // filter to get the Recycling Stations of that category only
 
-router.get('/:categoryName', async (req, res) => {
+router.get('/:categoryName', authenticateToken, async (req, res) => {
+    console.log(req.user)
     const collection = db.collection("recycling");
     console.log(req.params.categoryName);
     const all = await collection.find({category: `${req.params.categoryName}`}).toArray();

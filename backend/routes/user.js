@@ -1,27 +1,54 @@
 // create user
 
 const express = require("express");
-const { checkPassword } = require("../auth");
+const { checkPassword, generateAccessToken } = require("../auth");
 const router = express.Router();
 const { getDb, connectToDb } = require('../db');
 const User = require("../models/User")
+var ObjectId = require('mongodb').ObjectId;
 
-let db
+const bcrypt = require("bcrypt")
+
+let db = getDb()
 
 connectToDb((err) => {
-    if(!err){
-      db = getDb()
+    if (!err) {
+        db = getDb()
     }
 })
 
 router.post('/login', async (req, res) => {
-    const collection = db.collection('users');
+    // const collection = db.collection('users');
     const { membershipID, password } = req.body;
-    const user = collection.findOne({ membershipID: membershipID });
-    if (checkPassword(password, user.password)){
-        // Login success 
+    if (membershipID == "" || password == "") {
+        return res.status(403).json({ status: "failed" })
     }
+    const user = await collection.findOne({ membershipID: membershipID });
+    if (user == null) {
+        return res.status(403).json({ status: "failed" })
+    }
+    bcrypt.compare(password, user.password, function (err, result) {
+        if (!err) {
+            if (result == true){
+                // Login success   
+                const token = generateAccessToken( membershipID );
+                req.user = { 
+                    _id: user._id,
+                    membershipID: membershipID 
+                }
+                res.status(200).json({token: token, _id: user._id })
+            }
+            else {
+                return res.status(403);
+            }
+        } else {
+            console.log(err)
+            res.status(403);
+            return false;
+        }
+    });
 })
+
 
 router.post('/user', (req, res) => {
     const collection = db.collection('users');
@@ -94,9 +121,17 @@ router.get('/user', async (req, res) => {
 // get user's information
 
 router.get('/user/:userID', async (req, res) => {
+
     const urs = await db.collection('users').findOne({ _id: ObjectId(`${req.params.userID}`) });
+    console.log(urs)
     res.json(urs);
 });
+
+// router.get('/getuserdata', async (req, res) => {
+//     const _id = req.user._id;
+//     const urs = await db.collection('users').findOne({ _id: ObjectId(`${_id}`) });
+//     res.json(urs);
+// });
 
 // show current miles
 

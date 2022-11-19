@@ -7,7 +7,7 @@ import TopBar from "../components/topbar";
 export default function Home() {
   const router = useRouter();
   useEffect(() => {
-    router.push("/account")
+    router.push("/login")
   }, [])
   return (
     <>

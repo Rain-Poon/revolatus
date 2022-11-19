@@ -6,6 +6,7 @@ import RecycleCard from "../../components/recycle/recyclecard";
 import { CATHAY_GREEN, GOLD } from "../../styles/colors";
 import axios from "axios";
 import { RECYCLE_GET_RECYCLE_LIST } from "../../consts/routes.const";
+import { useRouter } from "next/router";
 
 const categoryList = [
     "Cosmetics",
@@ -16,18 +17,29 @@ const categoryList = [
 export default function RecyclePage() {
     const [option, setOption] = useState("Cosmetics");
     const [itemList, setItemList] = useState([]);
+    const router = useRouter();
 
-    const TracyKong = async () => {
-        const data = await axios.get(RECYCLE_GET_RECYCLE_LIST + option)
-        if (data.data != "") {
-            setItemList(data.data);
-        } else {
-            setItemList([]);
+    const fetchData = async () => {
+        const token = localStorage.getItem('token') || "";
+        try {
+            const data = await axios({
+                method: "GET",
+                url: RECYCLE_GET_RECYCLE_LIST + option,
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            if (data.data != "") {
+                setItemList(data.data);
+            } else {
+                setItemList([]);
+            }
+        } catch (error) {
+            if (error.response.status === 403) router.push("/login")
+            console.log(error)
         }
     }
 
     useEffect(() => {
-        TracyKong();
+        fetchData();
     }, [option]);
 
     return (

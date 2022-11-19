@@ -5,10 +5,13 @@ const Redemption = require('../models/Redemption');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { getDb, connectToDb } = require('../db');
+var ObjectId = require('mongodb').ObjectId;
+
+const { authenticateToken } = require("../auth")
 
 app.use(express.json())
 
-let db
+let db = getDb()
 
 connectToDb((err) => {
     if(!err){
@@ -38,7 +41,7 @@ router.post('/', (req, res) => {
 
 // get all Redemption Items
 
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
     const collection = db.collection("redemption");
     const all = await collection.find().toArray();
     res.json(all);
