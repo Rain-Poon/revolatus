@@ -1,0 +1,1 @@
+export const RECYCLE_GET_RECYCLE_LIST = "https://f6931828-82d6-4d69-8928-1e48b645c018.mock.pstmn.io" + "/recycle/getrecyclelist"
