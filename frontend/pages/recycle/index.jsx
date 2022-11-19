@@ -10,7 +10,7 @@ import { RECYCLE_GET_RECYCLE_LIST } from "../../consts/routes.const";
 const categoryList = [
     "Cosmetics",
     "Clothing",
-    "Recycling Rtore"
+    "Recycling Store"
 ]
 
 const _itemList = [

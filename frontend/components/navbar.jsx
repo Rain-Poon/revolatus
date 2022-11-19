@@ -4,6 +4,7 @@ import { CATHAY_GREEN } from '../styles/colors';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -19,7 +20,7 @@ export default function BottomNavBar() {
     const routes = [
         "/transportation",
         "/recycle",
-        "/card",
+        "/experience",
         "/account"
     ]
 
@@ -32,8 +33,8 @@ export default function BottomNavBar() {
             >
 
                 <BottomNavigationAction label="Transportation" icon={<DirectionsBusIcon />} onClick={(e) => { e.preventDefault(); router.push("/transportation") }} />
-                <BottomNavigationAction label="Recycle" icon={<RestoreIcon />} onClick={(e) => { e.preventDefault(); router.push("/recycle") }} />
-                <BottomNavigationAction label="My Card" icon={<PaymentIcon />} onClick={(e) => { e.preventDefault(); router.push("/card") }} />
+                <BottomNavigationAction label="Recycle" icon={<AutorenewIcon />} onClick={(e) => { e.preventDefault(); router.push("/recycle") }} />
+                <BottomNavigationAction label="Experience" icon={<PaymentIcon />} onClick={(e) => { e.preventDefault(); router.push("/experience") }} />
                 <BottomNavigationAction label="Account" icon={<AccountCircleIcon />} onClick={(e) => { e.preventDefault(); router.push("/account") }} />
             </BottomNavigation>
         </Box>
