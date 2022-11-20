@@ -17,7 +17,6 @@ export default function LoginPage() {
             membershipID: membershipID,
             password: password
         })
-        console.log(response)
         if (response.status === 200){
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('_id', response.data._id);
@@ -49,6 +48,9 @@ export default function LoginPage() {
                     onChange={(e) => {setPassword(e.target.value)}}
                 />
                 <Button variant="outlined" onClick={handleLogin}>Login</Button>
+                <Typography sx={{mt:5}}>For testing purposes only</Typography>
+                <Typography>Membership ID: 9876543210</Typography>
+                <Typography>Password: 123456</Typography>
             </Box>
         </>
     );
