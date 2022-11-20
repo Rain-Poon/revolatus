@@ -19,10 +19,10 @@ const Account = () => {
         const token = localStorage.getItem('token') || "";
         const _id = localStorage.getItem('_id') || "";
         try {
-            console.log(USER_INFO_ROUTE +  _id)
+            console.log(USER_INFO_ROUTE + _id)
             const data = await axios({
                 method: "GET",
-                url: USER_INFO_ROUTE +  _id,
+                url: USER_INFO_ROUTE + _id,
                 headers: { Authorization: `Bearer ${token}` }
             })
             console.log(data.data)
@@ -41,7 +41,8 @@ const Account = () => {
     useEffect(() => {
         fetchData();
     }, []);
-    return (<NavBars>
+    return (<NavBars>{
+        (userInfo != {}) &&
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", m: 3, p: 2 }}>
             <Avatar sx={{ width: 100, height: 100, m: 2 }} />
             <Typography variant="h4" sx={{ fontWeight: "bold" }}>{userInfo.name}</Typography>
@@ -51,7 +52,7 @@ const Account = () => {
             <Box sx={{ display: "flex", flexDirection: "row", width: "100%" }}>
                 <Box sx={{ flex: 1, justifyContent: "center", display: "flex", alignItems: "center" }}>
                     <Box sx={{ flex: 1, display: "flex", flexDirection: "column", textAlign: "center" }}>
-                        <Box>A</Box>
+                        <Box><img src="./miles.svg" width="50px" height="50px"/></Box>
                         <Typography>Miles</Typography>
                     </Box>
                     <Typography sx={{ flex: 1 }}>{userInfo.miles}</Typography>
@@ -59,7 +60,7 @@ const Account = () => {
                 <Divider orientation="vertical" variant="middle" flexItem sx={{ borderColor: GOLD, height: 30 }} />
                 <Box sx={{ flex: 1, justifyContent: "center", display: "flex", alignItems: "center" }}>
                     <Box sx={{ flex: 1, display: "flex", flexDirection: "column", textAlign: "center" }}>
-                        <Box>S</Box>
+                        <Box><img src="./statuspoints.png" width="50px" height="50px"/></Box>
                         <Typography>Status Points</Typography>
                     </Box>
                     <Typography sx={{ flex: 1 }}>1000</Typography>
@@ -75,6 +76,7 @@ const Account = () => {
             </Button>
 
         </Box>
+    }
     </NavBars>);
 }
 

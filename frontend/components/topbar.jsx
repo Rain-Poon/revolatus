@@ -5,7 +5,7 @@ import { CATHAY_GREEN } from '../styles/colors';
 export default function TopBar(){
     return (
         <AppBar sx={{p:2, backgroundColor: CATHAY_GREEN}}>
-            <Typography>CATHAY+</Typography>
+            <Typography sx={{textAlign: "center"}}>CATHAY+</Typography>
         </AppBar>
     );
 }

@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 const categoryList = [
     "Cosmetics",
     "Clothing",
-    "Recycling-Store"
+    "Green-At-Store"
 ]
 
 export default function RecyclePage() {

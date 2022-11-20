@@ -18,7 +18,7 @@ connectToDb((err) => {
 })
 
 router.post('/login', async (req, res) => {
-    // const collection = db.collection('users');
+    const collection = db.collection('users');
     const { membershipID, password } = req.body;
     if (membershipID == "" || password == "") {
         return res.status(403).json({ status: "failed" })

@@ -14,7 +14,7 @@ export default function ExperienceCard(props) {
                     {eventName}
                 </Box>
                 <Box sx={{ flex: 3, p:2 }}>
-                    (S) {pointAmount}
+                    <img src="./statuspoints.png" width="20px" height="20px"/> {pointAmount}
                     <Typography sx={{border: "1px solid black", borderRadius: "10px", p:1, mt:5}}>Redeem</Typography>
                 </Box>
             </Box>

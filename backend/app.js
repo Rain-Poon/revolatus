@@ -10,6 +10,8 @@ const jwt = require("jsonwebtoken");
 
 const morgan = require("morgan")
 
+app.use(express.static("../frontend/out"))
+
 morgan(':method :url :status :res[content-length] - :response-time ms');
 
 app.use((req, res, next) => {

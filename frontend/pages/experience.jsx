@@ -57,7 +57,7 @@ export default function CathayCard() {
             </Box> */}
             <Box sx={{ m: 2, p: 3 }}>
                 <Box sx={{ borderTop: `2px solid ${GOLD}`, width: "90%", m: 2 }}>&nbsp;</Box>
-                <Typography>Tracy said she will be giving me this description so I just say Lorem Ipsum first.</Typography>
+                <Typography sx={{textAlign: "center"}}>In the case that you could unfortunately not be upgraded onto the next membership tier at yearend, Cathay+ provides you with options to redeem your earned status point with a wide range of premium experiences.</Typography>
                 <Box sx={{ borderBottom: `2px solid ${GOLD}`, width: "90%", m: 2 }}>&nbsp;</Box>
             </Box>
             {!!(experienceList.length > 0) && experienceList.map((value, index) =>
