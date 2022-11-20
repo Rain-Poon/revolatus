@@ -46,10 +46,10 @@ connectToDb((err) => {
 
 // Import Routes
 const recyclingRoute = require('./routes/recycling');
-app.use('/recycling', recyclingRoute)
+app.use('/api/recycling', recyclingRoute)
 
 const redemptionRoute = require('./routes/redemption');
-app.use('/redemption', redemptionRoute)
+app.use('/api/redemption', redemptionRoute)
 
 const userRoute = require('./routes/user');
-app.use('/', userRoute)
+app.use('/api', userRoute)
